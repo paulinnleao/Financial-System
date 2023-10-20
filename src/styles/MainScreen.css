@@ -1,0 +1,11 @@
+
+.ulMain {
+    display: flex;
+    flex-direction: row;
+}
+
+.liMain{
+    margin: 0.1rem;
+    padding: 0.1rem;
+    list-style-type: none;
+}

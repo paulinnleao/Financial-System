@@ -1,9 +1,12 @@
+import {Link} from 'react-router-dom'
 const RegisterDebt = () => {
   return (
     <div>
       
 
-      <Link to={"/"}>Home</Link>
+      <Link to="/" className="btn btn-dark">
+              Home
+            </Link>
     </div>
   )
 }
