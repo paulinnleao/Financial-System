@@ -5,10 +5,11 @@ import { NavLink } from "react-router-dom";
 
 // Import dataBase
 
-const MainScreen = () => {
+const MainScreen = ({loading}) => {
 
 
     return (
+        <div>
             <article className="mainArticle">
                 <ul className="ulMain">
                     <li className="liMain">
@@ -42,9 +43,9 @@ const MainScreen = () => {
                         </NavLink>
                     </li>
                 </ul>
-            </article>,
-            <TableDebts />
-
+            </article>
+            <TableDebts loading={loading}/>
+        </div>
     )
 }
 

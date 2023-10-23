@@ -2,15 +2,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { urlDataBase } from "./urlDataBase";
 
+//Style
+import "../styles/TableDebts.css"
 
 
-const TableDebts = () => {
+const TableDebts = ({loading}) => {
 const [data, setData] = useState(null);
+
 
 useEffect(() => {
     const httpRequest = async () => {
         try{
-            const res = await fetch(urlDataBase.Debts);
+            const res = await fetch(urlDataBase[2]);
             const foundData = await res.json();
             setData(foundData);
         }catch(error){
@@ -18,23 +21,22 @@ useEffect(() => {
         }
     }
     httpRequest();
-},[])
+},[loading])
     return (
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Date</th>
-                </tr>
-                {data && data?.map((debt) => {
-                    console.log(debt.id + " " + debt.nameDebt + " " + debt.value + " " + debt.DueDate);
-                    <tr>
-                        <th key={debt.id}>{debt.nameDebt}</th>
-                        <th key={debt.id}>{debt.value}</th>
-                        <th key={debt.id}>{debt.DueDate}</th>
-                    </tr>
-                })}
-            </tbody>
+            <div className="grid-container">
+                <div className="grid-container-header">
+                    <div className="grid-title"><h1>Name</h1></div>
+                    <div className="grid-title"><h1>Price</h1></div>
+                    <div className="grid-title"><h1>Date</h1></div>
+                </div>
+                {data && data?.map((debt) => (
+                    <div className="grid-body" key={debt.id}>
+                        <div className="grid-item grid-item-left"><h2>{debt.nameDebt}</h2></div>
+                        <div className="grid-item"><h2>R${debt.value}</h2></div>
+                        <div className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></div>
+                    </div>
+                ))}
+            </div>
   )
 }
 

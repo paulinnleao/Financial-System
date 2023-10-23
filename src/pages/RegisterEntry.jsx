@@ -3,8 +3,9 @@ import "../styles/RegisterEntry.css"
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
+import TableDebts from "../components/TableDebts";
 
-const RegisterEntry = ({setTotal, total}) => {
+const RegisterEntry = ({setTotal, total, loading, httpConfig, setSelectDB}) => {
 
   const [nameEntry, setNameEntry] = useState();
   const [priceEntry, setPriceEntry] = useState(0);
@@ -15,6 +16,13 @@ const RegisterEntry = ({setTotal, total}) => {
     const newTotal = total + priceEntry;
     setTotal(newTotal);
     setPriceEntry(0);
+    setSelectDB(1);
+    const data = {
+            "nameEntry": nameEntry,
+            "value": priceEntry,
+            "DueDate": new Date()
+    }
+    httpConfig(data, "POST");
   }
 
   return (
@@ -25,8 +33,9 @@ const RegisterEntry = ({setTotal, total}) => {
             
       <form onSubmit={handleSubmit}>
         <label className="nameEntry">
-          <input 
-            type="text" 
+          <input
+            required
+            type="text"
             name="nameEntry"
             placeholder="Entry"
             onChange={(e) => setNameEntry(e.target.value)}
@@ -34,6 +43,7 @@ const RegisterEntry = ({setTotal, total}) => {
         </label>
         <label className="priceEntry">
           <input 
+            required
             type="number" 
             name="priceEntry"
             placeholder="Price"
@@ -42,6 +52,7 @@ const RegisterEntry = ({setTotal, total}) => {
         </label>
         <button type="submit">add</button>
       </form>
+      <TableDebts loading={loading}/>
     </div>
   )
 }
