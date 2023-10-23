@@ -6,14 +6,14 @@ import { urlDataBase } from "./urlDataBase";
 import "../styles/TableDebts.css"
 
 
-const TableDebts = () => {
+const TableExpenses = () => {
 const [data, setData] = useState(null);
 
 
 useEffect(() => {
     const httpRequest = async () => {
         try{
-            const res = await fetch(urlDataBase[2]);
+            const res = await fetch(urlDataBase[3]);
             const foundData = await res.json();
             setData(foundData);
         }catch(error){
@@ -31,7 +31,7 @@ useEffect(() => {
                 </div>
                 {data && data?.map((debt) => (
                     <div className="grid-body" key={debt.id}>
-                        <div className="grid-item grid-item-left"><h2>{debt.nameDebt}</h2></div>
+                        <div className="grid-item grid-item-left"><h2>{debt.nameExpense}</h2></div>
                         <div className="grid-item"><h2>${debt.value}</h2></div>
                         <div className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></div>
                     </div>
@@ -40,4 +40,4 @@ useEffect(() => {
   )
 }
 
-export default TableDebts;
+export default TableExpenses;

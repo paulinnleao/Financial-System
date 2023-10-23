@@ -11,7 +11,7 @@ import RegisterExpense from './pages/RegisterExpense';
 import WithdrawContribution from './pages/WithdrawContribution';
 
 // Imports React
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Import Components
 import { urlDataBase } from './components/urlDataBase';
@@ -20,24 +20,24 @@ import { urlDataBase } from './components/urlDataBase';
 import { useFetch } from './hooks/useFetch';
 
 function App() {
+  const { data, httpConfig, loading, error} = useFetch(urlDataBase[0]);
+  const [balance, setbalance] = useState(0);
 
-  const [selectDB, setSelectDB] = useState(0);
-  const { data, httpConfig, loading, error} = useFetch(urlDataBase[selectDB]);
-
-  const [total, setTotal] = useState(0);
-  useState(() => {
-    const updateTotal = async () => {
-      const res = await fetch(urlDataBase[0]);
-      const json = await res.json();
-      console.log(json[0].total);
-      setTotal(json[0].total);
+  const updateBalance = () => {
+    const balanceUpdate = {
+      id: 1,
+      total: balance,
     }
-  }, [data, loading, selectDB]);
+    httpConfig(balanceUpdate, "PUT", 1);
+  }  
+  useEffect(() => {
+  }, [balance]);
+  
   return (
     <div className="divApp">
       <header>
         <h1 className="h1App">Financial System</h1>
-        <h2>Total: R$ {total}</h2>
+        <h2>Balance: R$ {balance}</h2>
       </header>
       
       <BrowserRouter>
@@ -47,12 +47,12 @@ function App() {
           element={
             <MainScreen loading={loading}/>
           }/>
-          <Route path="/Register-Contribution" element={<RegisterContribution setTotal={setTotal}/>}/>
-          <Route path="/Withdraw-Contribution" element={<WithdrawContribution setTotal={setTotal}/>}/>
-          <Route path="/Pay-off-Debt" element={<PayOffDebt setTotal={setTotal}/>}/>
-          <Route path="/Register-Debt" element={<RegisterDebt setTotal={setTotal}/>}/>
-          <Route path="/Register-Expense" element={<RegisterExpense setTotal={setTotal}/>}/>
-          <Route path="/Register-Entry" element={<RegisterEntry setTotal={setTotal} total={total} loading={loading} httpConfig={httpConfig} setSelectDB={setSelectDB}/>}/>
+          <Route path="/Register-Contribution" element={<RegisterContribution setbalance={setbalance}/>}/>
+          <Route path="/Withdraw-Contribution" element={<WithdrawContribution setbalance={setbalance}/>}/>
+          <Route path="/Pay-off-Debt" element={<PayOffDebt setbalance={setbalance}/>}/>
+          <Route path="/Register-Debt" element={<RegisterDebt setbalance={setbalance}/>}/>
+          <Route path="/Register-Expense" element={<RegisterExpense setbalance={setbalance}/>}/>
+          <Route path="/Register-Entry" element={<RegisterEntry setbalance={setbalance} balance={balance} updateBalance={updateBalance}/>}/>
         </Routes>
       </BrowserRouter>
     </div>
