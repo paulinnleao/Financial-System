@@ -23,20 +23,24 @@ useEffect(() => {
     httpRequest();
 },[])
     return (
-            <div className="grid-container">
-                <div className="grid-container-header">
-                    <div className="grid-title"><h1>Name</h1></div>
-                    <div className="grid-title"><h1>Price</h1></div>
-                    <div className="grid-title"><h1>Date</h1></div>
-                </div>
-                {data && data?.map((debt) => (
-                    <div className="grid-body" key={debt.id}>
-                        <div className="grid-item grid-item-left"><h2>{debt.nameContribution}</h2></div>
-                        <div className="grid-item"><h2>${debt.value}</h2></div>
-                        <div className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></div>
-                    </div>
-                ))}
-            </div>
+            <table className="grid-container">
+                <thead className="grid-container-header">
+                    <tr>
+                        <th className="grid-title"><h1>Name</h1></th>
+                        <th className="grid-title"><h1>Price</h1></th>
+                        <th className="grid-title"><h1>Date</h1></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data && data?.map((debt) => (
+                        <tr className="grid-body" key={debt.id}>
+                            <td className="grid-item grid-item-left"><h2>{debt.nameContribution}</h2></td>
+                            <td className="grid-item"><h2>${debt.value}</h2></td>
+                            <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
   )
 }
 
