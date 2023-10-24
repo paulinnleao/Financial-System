@@ -2,13 +2,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { urlDataBase } from "./urlDataBase";
 
+// Images
+import remove from "../Images/excluir.png"
+import money_bag from "../Images/money-bag.png";
+
 //Style
-import "../styles/TableDebts.css"
+import "../styles/Tables.css"
+import { useFetch } from "../hooks/useFetch";
 
 
 const TableContribution = () => {
 const [data, setData] = useState(null);
 
+const { httpConfig, loading} = useFetch(urlDataBase[4]);
 
 useEffect(() => {
     const httpRequest = async () => {
@@ -21,7 +27,17 @@ useEffect(() => {
         }
     }
     httpRequest();
-},[])
+},[loading]);
+const removeContribution = ((id) => {
+    httpConfig(data, "DELETE", id)
+});
+const payContribution = ((id) => {
+    const dataDebt = {
+        id:id,
+        status:false,
+    }
+    httpConfig(dataDebt, "PUT", id)
+});
     return (
             <table className="grid-container">
                 <thead className="grid-container-header">
@@ -37,6 +53,20 @@ useEffect(() => {
                             <td className="grid-item grid-item-left"><h2>{debt.nameContribution}</h2></td>
                             <td className="grid-item"><h2>${debt.value}</h2></td>
                             <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                            <td><img 
+                                    src={remove}
+                                    alt="Remove"
+                                    height="100" 
+                                    width="100"
+                                    onClick={()=>(removeContribution(debt.id))}
+                                /></td>
+                                <td><img 
+                                    src={money_bag} 
+                                    alt="Pay"
+                                    height="100" 
+                                    width="100"
+                                    onClick={()=>(payContribution(debt.id))}
+                                /></td>
                         </tr>
                     ))}
                 </tbody>

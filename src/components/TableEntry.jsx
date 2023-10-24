@@ -4,21 +4,22 @@ import { urlDataBase } from "./urlDataBase";
 
 // Images
 import remove from "../Images/excluir.png"
-import pay from "../Images/pay.png";
+
 //Style
 import "../styles/Tables.css"
 import { useFetch } from "../hooks/useFetch";
 
 
-const TableExpenses = () => {
+const TableEntry = () => {
 const [data, setData] = useState(null);
 
-const { httpConfig, loading} = useFetch(urlDataBase[3]);
+
+const { httpConfig, loading} = useFetch(urlDataBase[1]);
 
 useEffect(() => {
     const httpRequest = async () => {
         try{
-            const res = await fetch(urlDataBase[3]);
+            const res = await fetch(urlDataBase[1]);
             const foundData = await res.json();
             setData(foundData);
         }catch(error){
@@ -27,15 +28,8 @@ useEffect(() => {
     }
     httpRequest();
 },[loading]);
-const removeExpense = ((id) => {
+const removeEntry = ((id) => {
     httpConfig(data, "DELETE", id)
-});
-const payExpense = ((id) => {
-    const dataDebt = {
-        id:id,
-        status:false,
-    }
-    httpConfig(dataDebt, "PUT", id)
 });
     return (
             <table className="grid-container">
@@ -49,22 +43,16 @@ const payExpense = ((id) => {
                 <tbody>
                 {data && data?.map((debt) => (
                     <tr className="grid-body" key={debt.id}>
-                        <td className="grid-item grid-item-left"><h2>{debt.nameExpense}</h2></td>
+                        <td className="grid-item grid-item-left"><h2>{debt.nameEntry}</h2></td>
                         <td className="grid-item"><h2>${debt.value}</h2></td>
                         <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                        
                         <td><img 
                                     src= {remove}
                                     alt="Remove"
                                     height="100" 
                                     width="100"
-                                    onClick={()=>(removeExpense(debt.id))}
-                                /></td>
-                                <td><img 
-                                    src={pay}
-                                    alt="Pay"
-                                    height="100" 
-                                    width="100"
-                                    onClick={()=>(payExpense(debt.id))}
+                                    onClick={()=>(removeEntry(debt.id))}
                                 /></td>
                     </tr>
                 ))}
@@ -73,4 +61,4 @@ const payExpense = ((id) => {
   )
 }
 
-export default TableExpenses;
+export default TableEntry;

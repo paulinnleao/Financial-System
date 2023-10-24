@@ -31,3 +31,12 @@
     width: 200px;
     border-left: none;
 }
+img{
+    opacity: 0.89;
+    width: 35px;
+    height: 35px;
+}
+img:hover{
+    opacity: 1;
+    cursor: pointer;
+}

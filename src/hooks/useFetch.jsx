@@ -47,7 +47,7 @@ export const useFetch = (url) => {
                 "Content-Type": "application/json"
             },
         });
-        setMethdo("DELETE");
+        setMethod("DELETE");
         setItemId(id);
        }else if(method === "PUT"){
         setConfig({
@@ -65,10 +65,6 @@ export const useFetch = (url) => {
     useEffect(()=>{
         const httpRequest = async()=>{
             if(method==="POST"){
-                
-        console.log("Entrei aqui - httpConfig POST e a URL é - " + url + " - " + Date() );
-                const newDate = Date() + 10000;
-                while(newDate > Date()){};
                 setLoading(true);
                 const res = await fetch(url, config)
                                     .then(response => {
@@ -83,9 +79,10 @@ export const useFetch = (url) => {
                                     });
                 const json = await res.json();
                 setCallFetch(json);
+                setLoading(false);
             }else if(method === "DELETE"){
+                setLoading(true);
                 const urlDelete = `${url}/${itemId}`;
-
                 const res = await fetch(urlDelete, config)
                                     .then(response => {
                                         if(!response.ok){
@@ -99,7 +96,9 @@ export const useFetch = (url) => {
                 const json = await res.json();
 
                 setCallFetch(json);
+                setLoading(false);
             }else if( method === "PUT"){
+                setLoading(true);
                 const urlUpdate = `${url}/${itemId}`;
                 const res = await fetch(urlUpdate, config)
                                     .then(response=> {
@@ -113,6 +112,7 @@ export const useFetch = (url) => {
                                     });
                 const json = await res.json();
                 setCallFetch(json);
+                setLoading(false);
             }
         };
         httpRequest();

@@ -14,10 +14,11 @@ const RegisterExpense = () => {
   const [dateExpense, setDateExpense] = useState(null);
 
   const handleSubmit = () =>{
-    data = {
+    const data = {
       nameExpense: nameExpense,
       value: valueExpense,
       DueDate: dateExpense,
+      status: true
     }
     httpConfig(data, "POST", 0);
   }

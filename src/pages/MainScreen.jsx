@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 // Import dataBase
 
-const MainScreen = ({loading}) => {
+const MainScreen = () => {
 
 
     return (
@@ -28,23 +28,13 @@ const MainScreen = ({loading}) => {
                         </NavLink>
                     </li>
                     <li className="liMain">
-                        <NavLink to="/Pay-off-Debt">
-                            Pay off Debt
-                        </NavLink>
-                    </li>
-                    <li className="liMain">
                         <NavLink to="/Register-Contribution">
                             Register Contribution
                         </NavLink>
                     </li>
-                    <li className="liMain">
-                        <NavLink to="/Withdraw-Contribution">
-                            Withdraw  Contribution
-                        </NavLink>
-                    </li>
                 </ul>
             </article>
-            <TableDebts loading={loading}/>
+            <TableDebts/>
         </div>
     )
 }

@@ -17,6 +17,7 @@ const RegisterContribution = () => {
       nameContribution: nameContribution,
       value: valueContribution,
       DueDate: dateContribution,
+      status: true,
     }
     httpConfig(data, "POST", 0);
   }
@@ -59,7 +60,7 @@ const RegisterContribution = () => {
                 onChange={(e)=>setDateContribution(e.target.value)}
                 />
               </label>
-              <button type='submit'>enter</button>
+              <button type='submit'>add</button>
             </form>
       <TableContribution />
     </div>

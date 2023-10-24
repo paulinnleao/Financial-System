@@ -15,6 +15,7 @@ const RegisterDebt = () => {
       nameDebt: nameDebt,
       value: valueDebt,
       DueDate: dateDebt,
+      status:true,
     }
   httpConfig(data, "POST", 0);
   }
@@ -56,7 +57,7 @@ const RegisterDebt = () => {
                 onChange={(e)=>setDateDebt(e.target.value)}
                 />
               </label>
-              <button type='submit'>enter</button>
+              <button type='submit'>add</button>
             </form>
             <TableDebts />
     </div>

@@ -1,64 +1,25 @@
 {
   "Entries": [
     {
-      "id": 0,
-      "nameEntry": "mask",
-      "value": 0,
-      "DueDate": "2018-01-10"
-    },
-    {
-      "nameEntry": "Salário Outubro",
-      "value": "1100",
-      "DueDate": "2023-10-23T17:57:04.489Z",
+      "nameEntry": "Salário Dezembro",
+      "value": "1250",
+      "DueDate": "2023-12-01",
       "id": 1
     },
     {
-      "nameEntry": "Salário Janeiro",
-      "value": "21321",
-      "DueDate": "2023-10-23T18:28:17.227Z",
+      "nameEntry": "Salário",
+      "value": "1500",
+      "DueDate": "2023-10-01",
       "id": 2
-    },
-    {
-      "nameEntry": "Alter",
-      "value": "123",
-      "DueDate": "2023-10-23T20:09:00.472Z",
-      "id": 3
-    },
-    {
-      "nameEntry": "Finally",
-      "value": "132465",
-      "DueDate": "2023-10-23T20:11:53.610Z",
-      "id": 4
     }
   ],
-  "Debts": [
-    {
-      "nameDebt": "Cartão de crédito",
-      "value": "150",
-      "DueDate": "1999-12-13",
-      "id": 1
-    }
-  ],
-  "Expenses": [
-    {
-      "id": 0,
-      "nameExpense": "mask",
-      "value": 0,
-      "DueDate": "2018-01-10"
-    }
-  ],
+  "Debts": [],
+  "Expenses": [],
   "Balance": [
     {
       "id": 1,
       "total": 0
     }
   ],
-  "Contribution": [
-    {
-      "id": 0,
-      "nameContribution": "mask",
-      "value": 0,
-      "DueDate": "2018-01-10"
-    }
-  ]
+  "Contribution": []
 }
