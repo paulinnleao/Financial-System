@@ -1,5 +1,8 @@
-// DataBase
+// React
 import { useEffect, useMemo, useState } from "react";
+import toast, {Toaster} from "react-hot-toast";
+
+// DataBase
 import { urlDataBase } from "./urlDataBase";
 
 // Images
@@ -15,27 +18,39 @@ const [data, setData] = useState(null);
 
 const { httpConfig, loading} = useFetch(urlDataBase[3]);
 
-useEffect(() => {
-    const httpRequest = async () => {
-        try{
-            const res = await fetch(urlDataBase[3]);
-            const foundData = await res.json();
-            setData(foundData);
-        }catch(error){
-            console.log(error.message);
-        }
+const httpRequest = async () => {
+    try{
+        const res = await fetch(urlDataBase[3]);
+        const foundData = await res.json();
+        setData(foundData);
+    }catch(error){
+        console.log(error.message);
     }
-    httpRequest();
+}
+
+useEffect(() => {
+    
+    if(!loading){
+        httpRequest();
+    }
 },[loading]);
 const removeExpense = ((id) => {
-    httpConfig(data, "DELETE", id)
+    try{
+        httpConfig(data, "DELETE", id)
+    }catch(e){
+        toast.error("Something didn't go right :(");
+    }
 });
 const payExpense = ((id) => {
-    const dataDebt = {
-        id:id,
-        status:false,
-    }
-    httpConfig(dataDebt, "PUT", id)
+        try{
+            const dataDebt = {
+                id:id,
+                status:false,
+            }
+            httpConfig(dataDebt, "PUT", id)
+        }catch(e){
+            toast.error("Something didn't go right :(");
+        }
 });
     return (
             <table className="grid-container">

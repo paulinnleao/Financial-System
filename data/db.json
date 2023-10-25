@@ -1,18 +1,5 @@
 {
-  "Entries": [
-    {
-      "nameEntry": "Salário Dezembro",
-      "value": "1250",
-      "DueDate": "2023-12-01",
-      "id": 1
-    },
-    {
-      "nameEntry": "Salário",
-      "value": "1500",
-      "DueDate": "2023-10-01",
-      "id": 2
-    }
-  ],
+  "Entries": [],
   "Debts": [],
   "Expenses": [],
   "Balance": [

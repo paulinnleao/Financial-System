@@ -4,6 +4,7 @@ import "../styles/RegisterEntry.css"
 // Import react
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
+import toast, { Toaster } from 'react-hot-toast';
 
 
 // Import myComponents and Functions
@@ -22,19 +23,27 @@ const RegisterEntry = ({refresh, setRefresh}) => {
   },[priceEntry]);
 
   const handleSubmit = () => {
-    const data = {
-            nameEntry: nameEntry,
-            value: priceEntry,
-            DueDate: dateEntry,
+    try{
+      const data = {
+              nameEntry: nameEntry,
+              value: priceEntry,
+              DueDate: dateEntry,
+      }
+      httpConfig(data, "POST", 0);
+      httpConfigBalance(balance+priceEntry, "PUT", 1);
+      setPriceEntry(0);
+      setRefresh(!refresh);
+    }catch(e){
+      toast.error("Error saving data!");
     }
-    httpConfig(data, "POST", 0);
-    httpConfigBalance(balance+priceEntry, "PUT", 1);
-    setPriceEntry(0);
-    setRefresh(!refresh);
   }
 
   return (
     <div>
+      <Toaster 
+        position="bottom-center"
+        reverseOrder={false}
+      />
       <Link to="/" className="btn btn-dark">
               Home
             </Link>

@@ -16,20 +16,28 @@ const [data, setData] = useState(null);
 
 const { httpConfig, loading} = useFetch(urlDataBase[1]);
 
-useEffect(() => {
-    const httpRequest = async () => {
-        try{
-            const res = await fetch(urlDataBase[1]);
-            const foundData = await res.json();
-            setData(foundData);
-        }catch(error){
-            console.log(error.message);
-        }
+const httpRequest = async () => {
+    try{
+        const res = await fetch(urlDataBase[1]);
+        const foundData = await res.json();
+        setData(foundData);
+    }catch(error){
+        console.log(error.message);
     }
-    httpRequest();
+}
+
+useEffect(() => {
+    if(!loading){
+        httpRequest();
+    }
 },[loading]);
+
 const removeEntry = ((id) => {
-    httpConfig(data, "DELETE", id)
+    try{
+        httpConfig(data, "DELETE", id)
+    }catch(e){
+        toast.error("Something didn't go right :(");
+    }
 });
     return (
             <table className="grid-container">

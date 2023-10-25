@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=PT+Sans+Narrow&family=Pixelify+Sans:wght@400;500&display=swap');
 
+html{
+  height: 80%;
+  border: 2px solid black;
+}
 html, body {
   font-family: 'Inter', 'Pixelify Sans', 'PT Sans Narrow', sans-serif;
   background-color: #fff8ec;
   margin: 2rem 5rem;
+  
+  border: 2px solid green;
 }
 
 header{

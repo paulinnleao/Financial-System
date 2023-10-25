@@ -1,5 +1,7 @@
+// Imports React
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import toast, {Toaster} from "react-hot-toast";
 
 // Import my functions and renders
 import { urlDataBase } from "../components/urlDataBase";
@@ -14,19 +16,26 @@ const RegisterExpense = () => {
   const [dateExpense, setDateExpense] = useState(null);
 
   const handleSubmit = () =>{
-    const data = {
-      nameExpense: nameExpense,
-      value: valueExpense,
-      DueDate: dateExpense,
-      status: true
+    try{
+      const data = {
+        nameExpense: nameExpense,
+        value: valueExpense,
+        DueDate: dateExpense,
+        status: true
+      }
+      httpConfig(data, "POST", 0);
+      toast.success("Data saved successfully!");
+    }catch(e){
+      toast.error("Error saving data!");
     }
-    httpConfig(data, "POST", 0);
   }
 
   return (
     <div>
-      
-
+      <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+        />
       <Link to="/" className="btn btn-dark">
               Home
             </Link>

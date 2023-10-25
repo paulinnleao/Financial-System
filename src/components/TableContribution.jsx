@@ -16,28 +16,44 @@ const [data, setData] = useState(null);
 
 const { httpConfig, loading} = useFetch(urlDataBase[4]);
 
+const httpRequest = async () => {
+    try{
+        const res = await fetch(urlDataBase[4]);
+        const foundData = await res.json();
+        setData(foundData);
+    }catch(error){
+        console.log(error.message);
+    }
+}
+
 useEffect(() => {
-    const httpRequest = async () => {
-        try{
-            const res = await fetch(urlDataBase[4]);
-            const foundData = await res.json();
-            setData(foundData);
-        }catch(error){
-            console.log(error.message);
-        }
+    if(!loading){
+        httpRequest();
     }
-    httpRequest();
 },[loading]);
+
 const removeContribution = ((id) => {
-    httpConfig(data, "DELETE", id)
-});
-const payContribution = ((id) => {
-    const dataDebt = {
-        id:id,
-        status:false,
+    try{
+        httpConfig(data, "DELETE", id)
     }
-    httpConfig(dataDebt, "PUT", id)
+    catch(e){
+        toast.error("Something didn't go right :(");
+    }
 });
+
+const payContribution = ((id) => {
+    try{
+        const dataDebt = {
+            id:id,
+            status:false,
+        }
+        httpConfig(dataDebt, "PUT", id)
+    }
+    catch(e){
+        toast.error("Something didn't go right :(");
+    }
+});
+
     return (
             <table className="grid-container">
                 <thead className="grid-container-header">

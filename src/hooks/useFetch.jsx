@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import toast from 'react-hot-toast';
 export const useFetch = (url) => {
     const [data, setData] = useState(null);
     const [config, setConfig] = useState(null);
@@ -11,8 +11,6 @@ export const useFetch = (url) => {
 
     useEffect(() => {
     const fetchData = async () => {
-        setLoading(true);
-
         try{
             const res = await fetch(url);
             const json = await res.json();
@@ -25,7 +23,7 @@ export const useFetch = (url) => {
             console.log(error.message);
             setError("Error loading data!");
         }
-        setLoading(false);
+        setLoading(!loading);
     }
     fetchData();
     },[url, callFetch]);
@@ -65,6 +63,7 @@ export const useFetch = (url) => {
     useEffect(()=>{
         const httpRequest = async()=>{
             if(method==="POST"){
+                console.log("Entrei no post");
                 setLoading(true);
                 const res = await fetch(url, config)
                                     .then(response => {
@@ -80,6 +79,7 @@ export const useFetch = (url) => {
                 const json = await res.json();
                 setCallFetch(json);
                 setLoading(false);
+                toast.success("Data saved successfully!");
             }else if(method === "DELETE"){
                 setLoading(true);
                 const urlDelete = `${url}/${itemId}`;

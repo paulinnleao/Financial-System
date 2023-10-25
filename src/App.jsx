@@ -36,7 +36,6 @@ function App() {
     }
     fetchData();
     },[refresh]);
-  
   return (
     <div className="divApp">
       <header>

@@ -1,8 +1,13 @@
+// Imports react
 import {Link} from 'react-router-dom'
-import TableDebts from '../components/TableDebts'
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+
+// Meus imports
 import { useFetch } from '../hooks/useFetch';
 import { urlDataBase } from '../components/urlDataBase';
+import TableDebts from '../components/TableDebts'
+
 const RegisterDebt = () => {
 
   const { httpConfig, loading} = useFetch(urlDataBase[2]);
@@ -11,18 +16,25 @@ const RegisterDebt = () => {
   const [valueDebt, setValueDebt] = useState(null);
 
   const handleSubmit = () => {
-    const data = {
-      nameDebt: nameDebt,
-      value: valueDebt,
-      DueDate: dateDebt,
-      status:true,
+      try{
+        const data = {
+          nameDebt: nameDebt,
+          value: valueDebt,
+          DueDate: dateDebt,
+          status:true,
+        }
+      httpConfig(data, "POST", 0);
+      toast.success("Data saved successfully!");
+    }catch(e){
+      toast.error("Error saving data!");
     }
-  httpConfig(data, "POST", 0);
-  }
+  };
   return (
     <div>
-      
-
+      <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+        />
       <Link to="/" className="btn btn-dark">
               Home
             </Link>

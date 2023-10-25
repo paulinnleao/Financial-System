@@ -1,6 +1,7 @@
 // DataBase
 import { useEffect, useMemo, useState } from "react";
 import { urlDataBase } from "./urlDataBase";
+import toast, { Toaster } from 'react-hot-toast';
 //Style
 import "../styles/Tables.css"
 import { useFetch } from "../hooks/useFetch";
@@ -13,30 +14,46 @@ const [data, setData] = useState(null);
 
 const { httpConfig, loading} = useFetch(urlDataBase[2]);
 
-useEffect(() => {
-    const httpRequest = async () => {
-        try{
-            const res = await fetch(urlDataBase[2]);
-            const foundData = await res.json();
-            setData(foundData);
-        }catch(error){
-            console.log(error.message);
-        }
+const httpRequest = async () => {
+    try{
+        const res = await fetch(urlDataBase[2]);
+        const foundData = await res.json();
+        setData(foundData);
+    }catch(error){
+        toast.error("DEU ERRO");
     }
-    httpRequest();
+}
+
+useEffect(() => {
+    if(!loading){
+        httpRequest();
+    }
 },[loading]);
 const removeDebt = ((id) => {
-    httpConfig(data, "DELETE", id)
+    try{
+        httpConfig(data, "DELETE", id);
+    }
+    catch(e){
+        toast.error("Something didn't go right :(");
+    }
 });
 const payDebt = ((id) => {
-    const dataDebt = {
-        id:id,
-        status:false,
+    try{
+        const dataDebt = {
+            id:id,
+            status:false,
+        }
+        httpConfig(dataDebt, "PUT", id)
+    }catch(e){
+        toast.error("Something didn't go right :(");
     }
-    httpConfig(dataDebt, "PUT", id)
 });
     return (
         <div>
+            <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+            />
             <table>
                 <thead className="grid-container-header">
                     <tr>
@@ -48,24 +65,22 @@ const payDebt = ((id) => {
                 <tbody>
                         {data && data?.map((debt) => (
                             <tr className="grid-body" key={debt.id}>
-                                
-                            {console.log(debt)}
                                 <td className={"grid-item grid-item-left " + (!debt.status?"payed":"noPayed")}><h2>{debt.nameDebt}</h2></td>
                                 <td className="grid-item"><h2>${debt.value}</h2></td>
                                 <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
-                                <td><img 
-                                    src={remove}
-                                    alt="Remove"
-                                    height="100" 
-                                    width="100"
-                                    onClick={()=>(removeDebt(debt.id))}
-                                /></td>
                                 <td><img 
                                     src={pay}
                                     alt="Pay"
                                     height="100" 
                                     width="100"
                                     onClick={()=>(payDebt(debt.id))}
+                                /></td>
+                                <td><img 
+                                    src={remove}
+                                    alt="Remove"
+                                    height="100" 
+                                    width="100"
+                                    onClick={()=>(removeDebt(debt.id))}
                                 /></td>
                             </tr>
                         ))}
