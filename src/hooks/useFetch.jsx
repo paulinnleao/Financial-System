@@ -29,6 +29,7 @@ export const useFetch = (url) => {
     },[url, callFetch]);
 
     const httpConfig = (data, method, id) => {
+        toast("AAAAAAAAAAAAH");
        if(method === "POST"){
         setConfig({
             method: "POST",
@@ -48,6 +49,8 @@ export const useFetch = (url) => {
         setMethod("DELETE");
         setItemId(id);
        }else if(method === "PUT"){
+        
+        toast("AAAAAAAAAAAAH");
         setConfig({
             method:"PUT",
             headers:{

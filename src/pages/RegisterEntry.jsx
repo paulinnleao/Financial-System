@@ -4,7 +4,7 @@ import "../styles/RegisterEntry.css"
 // Import react
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 
 // Import myComponents and Functions
@@ -12,38 +12,54 @@ import TableEntry from "../components/TableEntry";
 import { urlDataBase } from "../components/urlDataBase";
 import { useFetch } from "../hooks/useFetch";
 
-const RegisterEntry = ({refresh, setRefresh}) => {
+const RegisterEntry = ({refresh, setRefresh, data}) => {
+  toast.success("Sucesso meu brother");
   const [nameEntry, setNameEntry] = useState(null);
   const [priceEntry, setPriceEntry] = useState(0);
   const [dateEntry, setDateEntry] = useState(null);
   const { httpConfig, loading} = useFetch(urlDataBase[1]);
-  const { httpConfig: httpConfigBalance } = useFetch(urlDataBase[0]);
 
-  useEffect(() => {
-  },[priceEntry]);
+  const updateBalance = async () => {
+    const currentTotal = data[0].total;
+    const newTotal = currentTotal + priceEntry;
+    const config = {
+      method:"PUT",
+      header:{
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({total:newTotal}),
+    };
+    try{
+      const res = await fetch(`${urlDataBase[0]}/${1}`, config);
+      const json = await res.json();
+      setRefresh(json);
+    }catch{
+      toast.error("Something wrong happened when trying to update the balance!");
+    }
+  };
 
   const handleSubmit = () => {
     try{
-      const data = {
+
+      const dataEntry = {
               nameEntry: nameEntry,
               value: priceEntry,
               DueDate: dateEntry,
       }
-      httpConfig(data, "POST", 0);
-      httpConfigBalance(balance+priceEntry, "PUT", 1);
+
+      httpConfig(dataEntry, "POST", 0);
+      updateBalance();
       setPriceEntry(0);
       setRefresh(!refresh);
+
     }catch(e){
       toast.error("Error saving data!");
     }
   }
-
+  useEffect(() => {
+  },[]);
   return (
     <div>
-      <Toaster 
-        position="bottom-center"
-        reverseOrder={false}
-      />
       <Link to="/" className="btn btn-dark">
               Home
             </Link>
@@ -64,7 +80,7 @@ const RegisterEntry = ({refresh, setRefresh}) => {
             type="number" 
             name="priceEntry"
             placeholder="Price"
-            onChange={(e) => setPriceEntry(e.target.value)}
+            onChange={(e) => setPriceEntry(parseInt(e.target.value)+priceEntry)}
           />
         </label>
         <label className="dateEntry">

@@ -2,14 +2,13 @@
 
 html{
   height: 80%;
+  padding: 2.5rem;
   border: 2px solid black;
 }
 html, body {
   font-family: 'Inter', 'Pixelify Sans', 'PT Sans Narrow', sans-serif;
   background-color: #fff8ec;
   margin: 2rem 5rem;
-  
-  border: 2px solid green;
 }
 
 header{
