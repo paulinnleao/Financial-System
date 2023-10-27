@@ -13,7 +13,6 @@ import { urlDataBase } from "../components/urlDataBase";
 import { useFetch } from "../hooks/useFetch";
 
 const RegisterEntry = ({refresh, setRefresh, data}) => {
-  toast.success("Sucesso meu brother");
   const [nameEntry, setNameEntry] = useState(null);
   const [priceEntry, setPriceEntry] = useState(0);
   const [dateEntry, setDateEntry] = useState(null);
@@ -27,7 +26,7 @@ const RegisterEntry = ({refresh, setRefresh, data}) => {
       header:{
         "Content-type": "application/json",
       },
-      body: JSON.stringify({total:newTotal}),
+      body: JSON.stringify({total:currentTotal}),
     };
     try{
       const res = await fetch(`${urlDataBase[0]}/${1}`, config);
@@ -37,10 +36,10 @@ const RegisterEntry = ({refresh, setRefresh, data}) => {
       toast.error("Something wrong happened when trying to update the balance!");
     }
   };
-
-  const handleSubmit = () => {
+  useEffect(() => {}, [data]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
     try{
-
       const dataEntry = {
               nameEntry: nameEntry,
               value: priceEntry,
@@ -51,13 +50,10 @@ const RegisterEntry = ({refresh, setRefresh, data}) => {
       updateBalance();
       setPriceEntry(0);
       setRefresh(!refresh);
-
     }catch(e){
       toast.error("Error saving data!");
     }
   }
-  useEffect(() => {
-  },[]);
   return (
     <div>
       <Link to="/" className="btn btn-dark">
@@ -94,7 +90,7 @@ const RegisterEntry = ({refresh, setRefresh, data}) => {
         </label>
         <button type="submit">add</button>
       </form>
-      <TableEntry loading={loading}/>
+      <TableEntry />
     </div>
   )
 }

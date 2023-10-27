@@ -3,11 +3,12 @@
 html{
   height: 80%;
   padding: 2.5rem;
-  border: 2px solid black;
+  border: 2px solid #fff8ec;
 }
 html, body {
   font-family: 'Inter', 'Pixelify Sans', 'PT Sans Narrow', sans-serif;
-  background-color: #fff8ec;
+  color:white;
+  background-color: rgb(8, 8, 8);
   margin: 2rem 5rem;
 }
 
@@ -18,8 +19,8 @@ header{
   justify-content: space-between;
 }
 a{
-  color: black;
-  background: white;
+  color: white;
+  background: black;
   text-decoration: none;
   border: 2px solid black ;
   border-radius: 10px;

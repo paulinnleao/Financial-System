@@ -22,6 +22,7 @@ function App() {
   const {data} = useFetch(urlDataBase[0]);
 
   useEffect(() => {
+    console.log("Executei");
     },[refresh]);
 
 
@@ -50,6 +51,7 @@ function App() {
           <Route 
             path="/Register-Entry" 
             element={<RegisterEntry 
+                        refresh={refresh}
                         setRefresh={setRefresh}
                         data={data}/>}/>
         </Routes>
