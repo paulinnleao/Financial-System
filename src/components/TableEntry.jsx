@@ -32,13 +32,13 @@ useEffect(() => {
     }
 },[loading]);
 
-const removeEntry = ((id) => {
+const removeEntry = (id) => {
     try{
         httpConfig(data, "DELETE", id)
     }catch(e){
         toast.error("Something didn't go right :(");
     }
-});
+};
     return (
             <table className="grid-container">
                 <thead className="grid-container-header">
@@ -49,18 +49,18 @@ const removeEntry = ((id) => {
                     </tr>
                 </thead>
                 <tbody>
-                {data && data?.map((debt) => (
-                    <tr className="grid-body" key={debt.id}>
-                        <td className="grid-item grid-item-left"><h2>{debt.nameEntry}</h2></td>
-                        <td className="grid-item"><h2>${debt.value}</h2></td>
-                        <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                {data && data?.map((entry) => (
+                    <tr className="grid-body" key={entry.id}>
+                        <td className="grid-item grid-item-left"><h2>{entry.nameEntry}</h2></td>
+                        <td className="grid-item"><h2>${entry.value}</h2></td>
+                        <td className="grid-item grid-item-right"><h2>{entry.DueDate}</h2></td>
                         
                         <td><img 
                                     src= {remove}
                                     alt="Remove"
                                     height="100" 
                                     width="100"
-                                    onClick={()=>(removeEntry(debt.id))}
+                                    onClick={()=>(removeEntry(entry.id))}
                                 /></td>
                     </tr>
                 ))}

@@ -34,14 +34,14 @@ useEffect(() => {
         httpRequest();
     }
 },[loading]);
-const removeExpense = ((id) => {
+const removeExpense = (id) => {
     try{
         httpConfig(data, "DELETE", id)
     }catch(e){
         toast.error("Something didn't go right :(");
     }
-});
-const payExpense = ((id) => {
+};
+const payExpense = (id) => {
         try{
             const dataDebt = {
                 id:id,
@@ -51,7 +51,7 @@ const payExpense = ((id) => {
         }catch(e){
             toast.error("Something didn't go right :(");
         }
-});
+};
     return (
             <table className="grid-container">
                 <thead className="grid-container-header">
@@ -62,24 +62,24 @@ const payExpense = ((id) => {
                     </tr>
                 </thead>
                 <tbody>
-                {data && data?.map((debt) => (
-                    <tr className="grid-body" key={debt.id}>
-                        <td className="grid-item grid-item-left"><h2>{debt.nameExpense}</h2></td>
-                        <td className="grid-item"><h2>${debt.value}</h2></td>
-                        <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                {data && data?.map((expenses) => (
+                    <tr className="grid-body" key={expenses.id}>
+                        <td className="grid-item grid-item-left"><h2>{expenses.nameExpense}</h2></td>
+                        <td className="grid-item"><h2>${expenses.value}</h2></td>
+                        <td className="grid-item grid-item-right"><h2>{expenses.DueDate}</h2></td>
                         <td><img 
                                     src= {remove}
                                     alt="Remove"
                                     height="100" 
                                     width="100"
-                                    onClick={()=>(removeExpense(debt.id))}
+                                    onClick={()=>(removeExpense(expenses.id))}
                                 /></td>
                                 <td><img 
                                     src={pay}
                                     alt="Pay"
                                     height="100" 
                                     width="100"
-                                    onClick={()=>(payExpense(debt.id))}
+                                    onClick={()=>(payExpense(expenses.id))}
                                 /></td>
                     </tr>
                 ))}

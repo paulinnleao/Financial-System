@@ -9,6 +9,11 @@ import { useFetch } from "../hooks/useFetch";
 import remove from "../Images/excluir.png"
 import pay from "../Images/pay.png";
 
+const dateToday = new Date();
+
+const dateInString = `${dateToday.getMonth() + 1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+
+
 const TableDebts = () => {
 const [data, setData] = useState(null);
 
@@ -29,25 +34,44 @@ useEffect(() => {
         httpRequest();
     }
 },[loading]);
-const removeDebt = ((id) => {
+const removeDebt = (id) => {
     try{
         httpConfig(data, "DELETE", id);
     }
     catch(e){
         toast.error("Something didn't go right :(");
     }
-});
-const payDebt = ((id) => {
+};
+const payDebt = (debt) => {
+    console.log(debt);
     try{
-        const dataDebt = {
-            id:id,
-            status:false,
+            if(debt.status){
+            const dataDebt = {
+                nameDebt: debt.nameDebt,
+                value: debt.value,
+                DueDate: debt.DueDate,
+                status:false,
+            }
+            httpConfig(dataDebt, "PUT", debt.id);
         }
-        httpConfig(dataDebt, "PUT", id)
+        else{
+            toast.error("Debt already paid!");
+        }
     }catch(e){
         toast.error("Something didn't go right :(");
     }
-});
+};
+
+const overDue = (dDebt) =>{
+    const dateDebt = new Date(dDebt);
+    const today = new Date();
+    if ( dateDebt.getDate() <= today.getDate() && dateDebt.getMonth() <= today.getMonth() && dateDebt.getFullYear() <= today.getFullYear()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
     return (
         <div>
             <Toaster
@@ -65,15 +89,15 @@ const payDebt = ((id) => {
                 <tbody>
                         {data && data?.map((debt) => (
                             <tr className="grid-body" key={debt.id}>
-                                <td className={"grid-item grid-item-left " + (!debt.status?"payed":"noPayed")}><h2>{debt.nameDebt}</h2></td>
-                                <td className="grid-item"><h2>${debt.value}</h2></td>
-                                <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                                <td className={"grid-item grid-item-left " + (!debt.status?"payed":overDue(debt.DueDate)?"overDue":"noPayed")}><h2>{debt.nameDebt}</h2></td>
+                                <td className={"grid-item " + (!debt.status?"payed":overDue(debt.DueDate)?"overDue":"noPayed")}><h2>${debt.value}</h2></td>
+                                <td className={"grid-item grid-item-right " + (!debt.status?"payed":overDue(debt.DueDate)?"overDue":"noPayed")}><h2>{debt.DueDate}</h2></td>
                                 <td><img 
                                     src={pay}
                                     alt="Pay"
                                     height="100" 
                                     width="100"
-                                    onClick={()=>(payDebt(debt.id))}
+                                    onClick={()=>(payDebt(debt))}
                                 /></td>
                                 <td><img 
                                     src={remove}

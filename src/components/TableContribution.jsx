@@ -32,27 +32,32 @@ useEffect(() => {
     }
 },[loading]);
 
-const removeContribution = ((id) => {
+const removeContribution = (contribution) => {
     try{
-        httpConfig(data, "DELETE", id)
+        if(!contribution.status){
+            // desconta balance
+        }
+        httpConfig(data, "DELETE", contribution.id)
     }
     catch(e){
         toast.error("Something didn't go right :(");
     }
-});
+};
 
-const payContribution = ((id) => {
+const collect = (contribution) => {
     try{
         const dataDebt = {
-            id:id,
+            nameContribution: contribution.nameContribution,
+            value: contribution.DueDate,
+            DueDate: contribution.DueDate,
             status:false,
         }
-        httpConfig(dataDebt, "PUT", id)
+        httpConfig(dataDebt, "PUT", contribution.id)
     }
     catch(e){
         toast.error("Something didn't go right :(");
     }
-});
+};
 
     return (
             <table className="grid-container">
@@ -64,24 +69,24 @@ const payContribution = ((id) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data?.map((debt) => (
-                        <tr className="grid-body" key={debt.id}>
-                            <td className="grid-item grid-item-left"><h2>{debt.nameContribution}</h2></td>
-                            <td className="grid-item"><h2>${debt.value}</h2></td>
-                            <td className="grid-item grid-item-right"><h2>{debt.DueDate}</h2></td>
+                    {data && data?.map((contribution) => (
+                        <tr className="grid-body" key={contribution.id}>
+                            <td className={"grid-item grid-item-left " + (!contribution.status?"payed":"")}><h2>{contribution.nameContribution}</h2></td>
+                            <td className={"grid-item " + (!contribution.status?"payed":"")}><h2>${contribution.value}</h2></td>
+                            <td className={"grid-item grid-item-right " + (!contribution.status?"payed":"")}><h2>{contribution.DueDate}</h2></td>
+                            <td><img 
+                                    src={money_bag} 
+                                    alt="Pay"
+                                    height="100" 
+                                    width="100"
+                                    onClick={()=>(collect(contribution))}
+                                /></td>
                             <td><img 
                                     src={remove}
                                     alt="Remove"
                                     height="100" 
                                     width="100"
-                                    onClick={()=>(removeContribution(debt.id))}
-                                /></td>
-                                <td><img 
-                                    src={money_bag} 
-                                    alt="Pay"
-                                    height="100" 
-                                    width="100"
-                                    onClick={()=>(payContribution(debt.id))}
+                                    onClick={()=>(removeContribution(contribution))}
                                 /></td>
                         </tr>
                     ))}
