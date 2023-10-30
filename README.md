@@ -1,8 +1,13 @@
-# React + Vite
+# Financial Control System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This system contains a basic control of the financial system. With this system, you can:
 
-Currently, two official plugins are available:
+- Register Contributions
+- Register Debts
+- Register Entries
+- Register Expenses
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+On the home page, you can easily view your debts and take action to manage them, including making payments and deleting them.
+
+Feel free to add more features as needed, and I will assist with corrections and improvements.
+Please note that the balance calculation is not currently functioning correctly. If you have the expertise to do so, we welcome any efforts to troubleshoot and improve the program.
